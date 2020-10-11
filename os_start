@@ -1,0 +1,26 @@
+BIOS:Basic Input Output system 基本输入输出系统
+
+UEFI:Unified Extensible Fireware Interface 统一可扩展硬件接口
+
+MBR:Master Boot Recoder 主引导记录
+
+GPT:Globally Unique Identifier Partition Table 全局唯一表示码分区表
+
+GRUB:Grand Unified Boot Loader GNU出品的引导程序
+
+
+第一步：
+BIOS或者UEFI 他们识别硬件，不知道分区，不知道文件系统
+第二步：
+确定从硬盘启动后，读取硬盘的第一个扇区，里面是安装操作系统时就写好的引导程序，可以是MBR或者GPT，GPT比MBR更好，但MBR原理好理解，就用MBR讲解。MBR一共512个字节分三部分：
+第一部分是前446字节，里面存放着引导程序，起到grub程序装载的作用
+第二部分是64字节，记录分区表
+第三部分是2字节，MBR标识，55aa
+第三步：
+由MBR的引导程序开始装载GRUB程序，然后识别文件系统，再然后解析grub.cnf文件，加载内核、镜像到内存，内核开始工作
+第四步：
+内核引导，调用内核的初始化程序，加载内核模块，切换到真正的根文件系统，然后调用系统的第一个程序，centos6是init，centos7之后是systemd（system daemon）
+第五步：
+系统初始化，开始执行脚本或者unit
+第六步：
+启动终端，等待用户登陆，检查用户是否可以登陆，检查用户的登陆shell
